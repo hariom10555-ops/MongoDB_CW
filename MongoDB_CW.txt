@@ -1,0 +1,601 @@
+use Product_DB
+switched to db Product_DB
+use Library_DB;
+switched to db Library_DB
+db.createCollection("books");
+{ ok: 1 }
+db.books.insertMany([{tittle:"Suspense",author:"GD",genre:"Murder",price:2999,availaibleCopies:250},
+                     ]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a1663975295c68c2f734acb')
+  }
+}
+db.books.find();
+{
+  _id: ObjectId('6a1663975295c68c2f734acb'),
+  tittle: 'Suspense',
+  author: 'GD',
+  genre: 'Murder',
+  price: 2999,
+  availaibleCopies: 250
+}
+db.books.insertMany([{tittle:"LoveStory",author:"KD",genre:"Horror",price:3999,availaibleCopies:150},
+                     ]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a1663e15295c68c2f734acc')
+  }
+}
+db.books.insertMany([{tittle:"Thriller",author:"MD",genre:"Thriller",price:4999,availaibleCopies:450},
+                     ]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a1664245295c68c2f734acd')
+  }
+}
+db.books.insertMany([{tittle:"Slow",author:"SD",genre:"Slow_pace",price:499,availaibleCopies:450},
+                     ]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a16643b5295c68c2f734ace')
+  }
+}
+db.books.find();
+{
+  _id: ObjectId('6a1663975295c68c2f734acb'),
+  tittle: 'Suspense',
+  author: 'GD',
+  genre: 'Murder',
+  price: 2999,
+  availaibleCopies: 250
+}
+{
+  _id: ObjectId('6a1663e15295c68c2f734acc'),
+  tittle: 'LoveStory',
+  author: 'KD',
+  genre: 'Horror',
+  price: 3999,
+  availaibleCopies: 150
+}
+{
+  _id: ObjectId('6a1664245295c68c2f734acd'),
+  tittle: 'Thriller',
+  author: 'MD',
+  genre: 'Thriller',
+  price: 4999,
+  availaibleCopies: 450
+}
+{
+  _id: ObjectId('6a16643b5295c68c2f734ace'),
+  tittle: 'Slow',
+  author: 'SD',
+  genre: 'Slow_pace',
+  price: 499,
+  availaibleCopies: 450
+}
+db.find.({price:{$gt:2000,$lt:5000}});
+SyntaxError: Unexpected token (1:8)
+
+> 1 | db.find.({price:{$gt:2000,$lt:5000}});
+    |         ^
+db.books.find.({price:{$gt:2000,$lt:5000}});
+SyntaxError: Unexpected token (1:14)
+
+> 1 | db.books.find.({price:{$gt:2000,$lt:5000}});
+    |               ^
+db.books.find({price:{$gt:2000,$lt:5000}});
+{
+  _id: ObjectId('6a1663975295c68c2f734acb'),
+  tittle: 'Suspense',
+  author: 'GD',
+  genre: 'Murder',
+  price: 2999,
+  availaibleCopies: 250
+}
+{
+  _id: ObjectId('6a1663e15295c68c2f734acc'),
+  tittle: 'LoveStory',
+  author: 'KD',
+  genre: 'Horror',
+  price: 3999,
+  availaibleCopies: 150
+}
+{
+  _id: ObjectId('6a1664245295c68c2f734acd'),
+  tittle: 'Thriller',
+  author: 'MD',
+  genre: 'Thriller',
+  price: 4999,
+  availaibleCopies: 450
+}
+db.books.findOne({genere:"Horror"});
+null
+db.books.findOne({genre:"Horror"});
+{
+  _id: ObjectId('6a1663e15295c68c2f734acc'),
+  tittle: 'LoveStory',
+  author: 'KD',
+  genre: 'Horror',
+  price: 3999,
+  availaibleCopies: 150
+}
+db.books.updateOne({tittle:"LoveStory"},
+                   {set:{price:7999}});
+MongoInvalidArgumentError: Update document requires atomic operators
+db.books.updateOne({tittle:"LoveStory"},
+                   {$set:{price:7999}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.books.find();
+{
+  _id: ObjectId('6a1663975295c68c2f734acb'),
+  tittle: 'Suspense',
+  author: 'GD',
+  genre: 'Murder',
+  price: 2999,
+  availaibleCopies: 250
+}
+{
+  _id: ObjectId('6a1663e15295c68c2f734acc'),
+  tittle: 'LoveStory',
+  author: 'KD',
+  genre: 'Horror',
+  price: 7999,
+  availaibleCopies: 150
+}
+{
+  _id: ObjectId('6a1664245295c68c2f734acd'),
+  tittle: 'Thriller',
+  author: 'MD',
+  genre: 'Thriller',
+  price: 4999,
+  availaibleCopies: 450
+}
+{
+  _id: ObjectId('6a16643b5295c68c2f734ace'),
+  tittle: 'Slow',
+  author: 'SD',
+  genre: 'Slow_pace',
+  price: 499,
+  availaibleCopies: 450
+}
+db.books.updateMany({availaibleCopies::{$gt:2999}},
+                    {$inc:{availaibleCopies:2}});
+SyntaxError: Unexpected token (1:38)
+
+> 1 | db.books.updateMany({availaibleCopies::{$gt:2999}},
+    |                                       ^
+  2 |                     {$inc:{availaibleCopies:2}});
+db.books.updateMany({availaibleCopies:{$gt:2999}},
+                    {$inc:{availaibleCopies:2}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+db.books.find();
+{
+  _id: ObjectId('6a1663975295c68c2f734acb'),
+  tittle: 'Suspense',
+  author: 'GD',
+  genre: 'Murder',
+  price: 2999,
+  availaibleCopies: 250
+}
+{
+  _id: ObjectId('6a1663e15295c68c2f734acc'),
+  tittle: 'LoveStory',
+  author: 'KD',
+  genre: 'Horror',
+  price: 7999,
+  availaibleCopies: 150
+}
+{
+  _id: ObjectId('6a1664245295c68c2f734acd'),
+  tittle: 'Thriller',
+  author: 'MD',
+  genre: 'Thriller',
+  price: 4999,
+  availaibleCopies: 450
+}
+{
+  _id: ObjectId('6a16643b5295c68c2f734ace'),
+  tittle: 'Slow',
+  author: 'SD',
+  genre: 'Slow_pace',
+  price: 499,
+  availaibleCopies: 450
+}
+db.books.updateMany({availaibleCopies:{$gt:200}},
+                    {$inc:{availaibleCopies:2}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+db.books.find();
+{
+  _id: ObjectId('6a1663975295c68c2f734acb'),
+  tittle: 'Suspense',
+  author: 'GD',
+  genre: 'Murder',
+  price: 2999,
+  availaibleCopies: 252
+}
+{
+  _id: ObjectId('6a1663e15295c68c2f734acc'),
+  tittle: 'LoveStory',
+  author: 'KD',
+  genre: 'Horror',
+  price: 7999,
+  availaibleCopies: 150
+}
+{
+  _id: ObjectId('6a1664245295c68c2f734acd'),
+  tittle: 'Thriller',
+  author: 'MD',
+  genre: 'Thriller',
+  price: 4999,
+  availaibleCopies: 452
+}
+{
+  _id: ObjectId('6a16643b5295c68c2f734ace'),
+  tittle: 'Slow',
+  author: 'SD',
+  genre: 'Slow_pace',
+  price: 499,
+  availaibleCopies: 452
+}
+db.books.deleteOne({tittle:"Slow"});
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+db.books.find();
+{
+  _id: ObjectId('6a1663975295c68c2f734acb'),
+  tittle: 'Suspense',
+  author: 'GD',
+  genre: 'Murder',
+  price: 2999,
+  availaibleCopies: 252
+}
+{
+  _id: ObjectId('6a1663e15295c68c2f734acc'),
+  tittle: 'LoveStory',
+  author: 'KD',
+  genre: 'Horror',
+  price: 7999,
+  availaibleCopies: 150
+}
+{
+  _id: ObjectId('6a1664245295c68c2f734acd'),
+  tittle: 'Thriller',
+  author: 'MD',
+  genre: 'Thriller',
+  price: 4999,
+  availaibleCopies: 452
+}
+db.books.deleteMany({availaibleCopies:0});
+{
+  acknowledged: true,
+  deletedCount: 0
+}
+use Hospital_DB;
+switched to db Hospital_DB
+db.createCollection("patients");
+{ ok: 1 }
+db.patients.insertMany([{name:"virat",age:25,disease:"cancer",doc_assigned:"c_special",city:"mumbai"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a1668985295c68c2f734acf')
+  }
+}
+db.patients.find()
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  name: 'virat',
+  age: 25,
+  disease: 'cancer',
+  doc_assigned: 'c_special',
+  city: 'mumbai'
+}
+db.patients.insertMany([{name:"ritik",age:24,disease:"fever",doc_assigned:"mbbs",city:"delhi"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a1669045295c68c2f734ad0')
+  }
+}
+db.patients.insertMany([{name:"rohit",age:25,disease:"fever",doc_assigned:"mbbs",city:"mumbai"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a1669665295c68c2f734ad1')
+  }
+}
+db.patients.insertMany([{name:"gautam",age:26,disease:"cough",doc_assigned:"mbbs",city:"mumbai"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a1669a15295c68c2f734ad2')
+  }
+}
+db.patients.find()
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  name: 'virat',
+  age: 25,
+  disease: 'cancer',
+  doc_assigned: 'c_special',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1669045295c68c2f734ad0'),
+  name: 'ritik',
+  age: 24,
+  disease: 'fever',
+  doc_assigned: 'mbbs',
+  city: 'delhi'
+}
+{
+  _id: ObjectId('6a1669665295c68c2f734ad1'),
+  name: 'rohit',
+  age: 25,
+  disease: 'fever',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1669a15295c68c2f734ad2'),
+  name: 'gautam',
+  age: 26,
+  disease: 'cough',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+db.patients.find({age:{$gt:20,$lt:50}})
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  name: 'virat',
+  age: 25,
+  disease: 'cancer',
+  doc_assigned: 'c_special',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1669045295c68c2f734ad0'),
+  name: 'ritik',
+  age: 24,
+  disease: 'fever',
+  doc_assigned: 'mbbs',
+  city: 'delhi'
+}
+{
+  _id: ObjectId('6a1669665295c68c2f734ad1'),
+  name: 'rohit',
+  age: 25,
+  disease: 'fever',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1669a15295c68c2f734ad2'),
+  name: 'gautam',
+  age: 26,
+  disease: 'cough',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+db.patients.findOne({disease:fever})
+ReferenceError: fever is not defined
+db.patients.findOne({disease:"fever"})
+{
+  _id: ObjectId('6a1669045295c68c2f734ad0'),
+  name: 'ritik',
+  age: 24,
+  disease: 'fever',
+  doc_assigned: 'mbbs',
+  city: 'delhi'
+}
+db.patients.updateOne({name:"ritik"},{$set:{doc_assigned:bms}})
+ReferenceError: bms is not defined
+db.patients.updateOne({name:"ritik"},{$set:{doc_assigned:"bms"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.patients.find()
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  name: 'virat',
+  age: 25,
+  disease: 'cancer',
+  doc_assigned: 'c_special',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1669045295c68c2f734ad0'),
+  name: 'ritik',
+  age: 24,
+  disease: 'fever',
+  doc_assigned: 'bms',
+  city: 'delhi'
+}
+{
+  _id: ObjectId('6a1669665295c68c2f734ad1'),
+  name: 'rohit',
+  age: 25,
+  disease: 'fever',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1669a15295c68c2f734ad2'),
+  name: 'gautam',
+  age: 26,
+  disease: 'cough',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+db.patients.updateMany({age:{$gt:24}},
+                       {$inc:2})
+MongoServerError: Modifiers operate on fields but we found type int instead. For example: {$mod: {<field>: ...}} not {$inc: 2}
+db.patients.updateMany({age:{$gt:24}},
+                       {$inc:{age:2}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+db.patients.deleteOne({name:"rohit"})
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+db.patients.deleteOne({city:"delhi"})
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+db.patients.findOne()
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  name: 'virat',
+  age: 27,
+  disease: 'cancer',
+  doc_assigned: 'c_special',
+  city: 'mumbai'
+}
+db.patients.find({},{name:"virat",age:27});
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  age: 27,
+  name: 'virat'
+}
+{
+  _id: ObjectId('6a1669a15295c68c2f734ad2'),
+  age: 28,
+  name: 'virat'
+}
+db.patients.find().sort({age:-1});
+{
+  _id: ObjectId('6a1669a15295c68c2f734ad2'),
+  name: 'gautam',
+  age: 28,
+  disease: 'cough',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  name: 'virat',
+  age: 27,
+  disease: 'cancer',
+  doc_assigned: 'c_special',
+  city: 'mumbai'
+}
+db.patients.find().sort({age:1});
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  name: 'virat',
+  age: 27,
+  disease: 'cancer',
+  doc_assigned: 'c_special',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1669a15295c68c2f734ad2'),
+  name: 'gautam',
+  age: 28,
+  disease: 'cough',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+db.patients.find().limit(3)
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  name: 'virat',
+  age: 27,
+  disease: 'cancer',
+  doc_assigned: 'c_special',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1669a15295c68c2f734ad2'),
+  name: 'gautam',
+  age: 28,
+  disease: 'cough',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+db.patients.find().skip(1)
+{
+  _id: ObjectId('6a1669a15295c68c2f734ad2'),
+  name: 'gautam',
+  age: 28,
+  disease: 'cough',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+db.patients
+Hospital_DB.patients
+db.patients.find({age:{$gt:25}})
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  name: 'virat',
+  age: 27,
+  disease: 'cancer',
+  doc_assigned: 'c_special',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1669a15295c68c2f734ad2'),
+  name: 'gautam',
+  age: 28,
+  disease: 'cough',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+db.patients.find({age:{$lt:25}})
+db.patients.find({age:{$lt:30}})
+{
+  _id: ObjectId('6a1668985295c68c2f734acf'),
+  name: 'virat',
+  age: 27,
+  disease: 'cancer',
+  doc_assigned: 'c_special',
+  city: 'mumbai'
+}
+{
+  _id: ObjectId('6a1669a15295c68c2f734ad2'),
+  name: 'gautam',
+  age: 28,
+  disease: 'cough',
+  doc_assigned: 'mbbs',
+  city: 'mumbai'
+}
+Hospital_DB
+Selection deleted
+
+
